@@ -1,5 +1,29 @@
-var inquirer = require('inquirer');
-//const ListPrompt = require('inquirer/lib/prompts/list');
+//Requires//
+const inquirer = require('inquirer');
+//Initializing express
+const express = require('express');
+const path = require('path');
+const db = require('db');
+
+//Initializing express
+const app = express();
+const PORT = 3001;
+
+//Middleware for Parsing JSON and urlencoded form data
+app.use(express.json());
+app.use(express.urlencoded({ extended: true}));
+
+app.use(express.static('public'));
+
+
+const viewAllDepartments = () => {
+    //GET REQUEST to DB Query - use /api/viewdepartments//
+    app.get('/api/viewdepartments', (req, res) =>
+    console.log(res.json())
+    //db.query();
+    )
+    
+}
 
 const init = () =>{
     inquirer
@@ -13,7 +37,7 @@ const init = () =>{
   ])
   .then((answers) => {
     if (answers == "view all departments"){
-
+        viewAllDepartments();
     } else if (answers == "view all roles"){
 
     } else if (answers == "view all employees"){
