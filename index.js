@@ -3,7 +3,7 @@ const inquirer = require('inquirer');
 //Initializing express
 const express = require('express');
 const path = require('path');
-const db = require('db');
+const mysql = require('mysql');
 
 //Initializing express
 const app = express();
@@ -15,14 +15,34 @@ app.use(express.urlencoded({ extended: true}));
 
 app.use(express.static('public'));
 
+//Connecting to Database//
+
+const db = mysql.createConnection({
+    host:'localhost',
+    user: 'root',
+    password: 'password',
+    database: 'departments_db'
+},
+    console.log("Connected to departments_db database")
+);
+
 
 const viewAllDepartments = () => {
     //GET REQUEST to DB Query - use /api/viewdepartments//
-    app.get('/api/viewdepartments', (req, res) =>
-    console.log(res.json())
-    //db.query();
-    )
-    
+    app.get('/api/viewdepartments', (res, req) => {
+        const sql = 'SELECT QUERY';
+
+        db.query(sql, (err, rows) => {
+            if (err){
+                res.status(500).json({ error: err.message});
+                return;
+            }
+            res.json({
+                message: 'success',
+                data: rows
+            })
+        });
+    });
 }
 
 const init = () =>{
