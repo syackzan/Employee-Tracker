@@ -30,10 +30,6 @@ const viewAllDepartments = () => {
     const sql = 'SELECT * FROM departments';
 
     db.query(sql, (err, rows) => {
-        if (err){
-            res.status(500).json({ error: err.message});
-            return;
-        }
         console.log("\n");
         console.log("See Below for Departments");
         console.table(rows);
@@ -44,17 +40,13 @@ const viewAllDepartments = () => {
 
 const viewAllRoles = () => {
     //QUERY TO RETURN ALL THE ROLES//
-    const sql = `SELECT role.id AS id, role.title AS Title, departments.department AS Department, role.salary AS salary 
-    FROM role 
-    JOIN departments ON role.departments_id = department.id`;
+    const sql = `SELECT role.id AS ID, role.title AS Title, departments.name AS Department, role.salary AS salary
+    FROM role
+    JOIN departments ON role.departments_id = departments.id`;
 
     db.query(sql, (err, rows) => {
-        if (err){
-            res.status(500).json({ error: err.message});
-            return;
-        }
         console.log("\n");
-        console.log("See Below for Departments");
+        console.log("Roles & Associated Departments");
         console.table(rows);
         init();
     });

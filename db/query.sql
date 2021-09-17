@@ -2,6 +2,6 @@
 SELECT * FROM departments;
 
 -- QUERY TO RETURN ROLE ID, TITLE, DEPARTMENT, SALARY --
-SELECT role.id AS id, role.title AS Title, departments.department AS Department, role.salary AS salary
+SELECT role.id AS ID, role.title AS Title, departments.name AS Department, role.salary AS salary
 FROM role
-JOIN departments ON role.departments_id = department.id
+JOIN departments ON role.departments_id = departments.id
