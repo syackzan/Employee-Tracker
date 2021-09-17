@@ -29,3 +29,9 @@ VALUES (?, ?, ?)
 -- QUERY FOR ADDING AN EMPLOYEE --
 INSERT INTO employees (first_name, last_name, role, manager_id) 
 VALUES (?, ?, ?, ?)
+
+-- QUERY FOR UPDATING AN EMPLOYEE --
+SELECT employee.first_name AS First, employee.last_name AS Last_Name
+FROM employee
+
+UPDATE employee SET role_id = ? WHERE id = ?

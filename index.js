@@ -24,7 +24,7 @@ const db = mysql.createConnection({
     console.log("Connected to departments_db database")
 );
 
-
+//View All Departments//
 const viewAllDepartments = () => {
     //QUERY TO RETURN ALL THE DEPARTMENTS//
     const sql = 'SELECT * FROM departments';
@@ -38,6 +38,7 @@ const viewAllDepartments = () => {
     
 }
 
+//View All Roles//
 const viewAllRoles = () => {
     //QUERY TO RETURN ALL THE ROLES//
     const sql = `SELECT role.id AS ID, role.title AS Title, departments.name AS Department, role.salary AS salary
@@ -52,6 +53,7 @@ const viewAllRoles = () => {
     });
 }
 
+//View All Employees//
 const viewAllEmployees = () => {
   //QUERY TO RETURN ALL THE EMPLOYEES//
   const sql = `SELECT employee.id AS ID, 
@@ -73,6 +75,7 @@ const viewAllEmployees = () => {
   init();
 }
 
+//Add A Department//
 const addADepartment = () => {
   inquirer
    .prompt([
@@ -83,7 +86,7 @@ const addADepartment = () => {
      }
    ])
    .then((answer) => {
-      //QUERY TO RETURN ALL THE ROLES//
+      //QUERY TO ADD A DEPARTMENT//
       const sql = `INSERT INTO departments (name) VALUES (?)`;
       let newDepartment = answer.newDepartment;
 
@@ -96,6 +99,7 @@ const addADepartment = () => {
    });
 }
 
+//Add a Role//
 const addARole = () => {
   inquirer
    .prompt([
@@ -116,7 +120,7 @@ const addARole = () => {
     }
    ])
    .then((answers) => {
-      //QUERY TO RETURN ALL THE ROLES//
+      //QUERY TO ADD A ROLE//
       const sql = `INSERT INTO role (title, salary, departments_id) VALUES (?, ?, ?)`;
       answers.newSalary = parseInt(answers.newSalary);
       answers.departments_id = parseInt(answers.departments_id);
@@ -131,6 +135,7 @@ const addARole = () => {
    });
 }
 
+//Add An Employee//
 const addAEmployee = () => {
   inquirer
    .prompt([
@@ -156,11 +161,11 @@ const addAEmployee = () => {
     }
    ])
    .then((answers) => {
-      //QUERY TO RETURN ALL THE ROLES//
-      //Role_id needs a way to link to an actual role. Right now it is supposed to receive and integer!!!!
+      //QUERY To Add an Employee//
       const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) 
       VALUES (?, ?, ?, ?)`;
       answers.eManager = parseInt(answers.eManager);
+      answers.eRole = parseInt(answers.eRole);
       let roleArray = [answers.firstName, answers.lastName, answers.eRole, answers.eManager];
       console.log(roleArray);
       db.query(sql, roleArray, (err, rows) => {
@@ -172,12 +177,69 @@ const addAEmployee = () => {
    });
 }
 
+const updateEmployee = () => {
+  
+  const sql = `SELECT employee.first_name AS First, employee.last_name AS Last_Name
+  FROM employee`;
+  let namesArray = [];
+
+  db.query(sql, (err, rows) => {
+    console.log(rows);
+    for (let i = 0; i < rows.length; i++){
+      let name = `${rows[i].First} ${rows[i].Last_Name}`;
+      namesArray.push(name);
+    }
+
+    inquirer
+   .prompt([
+     {
+       type: "list",
+       choices: namesArray,
+       message: "Please select an Employee you would like to update.",
+       name: "name"
+     }
+   ])
+   .then((answers) => {
+      let setId;
+    
+    //SET ID # To Search//
+      for (let i = 0; i < namesArray.length; i++){
+        if(answers.name == namesArray[i]){
+          setId = i + 1;
+        }
+      }
+
+      const sql = ``;
+      console.log(setId);
+      console.log(answers.name);
+
+      // console.log(roleArray);
+      // db.query(sql, roleArray, (err, rows) => {
+      //     console.log("\n");
+      //     console.log(`Success! ${answers.newRole} Employee Added`);
+      //     console.log("\n");
+      //     init();
+      // });
+   });
+
+    //init();
+});
+}
+
+//Initializing Function when node index.js is scripted//
+//Prompt to have user make a decision on what they would like to do with the department information//
 const init = () => {
 inquirer
   .prompt([
     {
         type: 'list',
-        choices: ["view all departments", 'view all roles', 'view all employees', 'add a department','add a role', 'add an employee', 'update an employee role', 'exit'],
+        choices: ["view all departments", 
+        'view all roles', 'view all employees', 
+        'add a department',
+        'add a role', 
+        'add an employee', 
+        'update an employee role', 
+        'exit'],
         message: 'Please select an option below. You can use the Up & Down Keys to scroll',
         name: 'decision'
     }
@@ -196,7 +258,7 @@ inquirer
     } else if(answers.decision == "add an employee"){
        addAEmployee(); 
     } else if(answers.decision == "update an employee role"){
-
+      updateEmployee();
     } else if (answers.decision == "exit") {
       console.log("Exiting the Program. Have a good day!")
       return process.exit();
@@ -215,21 +277,6 @@ inquirer
     }
   });
 }
-
-//Function for view all departments//
-
-//Function for view all Roles//
-
-//Function for view all Employees//
-
-//Function for add a department//
-
-//Function for add a role//
-
-//Function for add an employee//
-
-//Function for add an employee role//
-
 
 app.listen(PORT, () =>
     console.log(`Server running on port ${PORT}`),   
