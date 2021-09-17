@@ -17,3 +17,7 @@ employee.manager_id AS Manager
 FROM employee
 JOIN role ON employee.role_id = role.id
 JOIN departments ON role.departments_id = departments.id;
+
+-- QUERY FOR ADDING A DEPARTMENT --
+INSERT INTO departments (name)
+VALUES (?)

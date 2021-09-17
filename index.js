@@ -73,12 +73,68 @@ const viewAllEmployees = () => {
   init();
 }
 
+const addADepartment = () => {
+  inquirer
+   .prompt([
+     {
+       type: "input",
+       message: "Please enter the Department you would like to add?",
+       name: "newDepartment"
+     }
+   ])
+   .then((answer) => {
+      //QUERY TO RETURN ALL THE ROLES//
+      const sql = `INSERT INTO departments (name) VALUES (?)`;
+      let newDepartment = answer.newDepartment;
+
+      db.query(sql, newDepartment, (err, rows) => {
+          console.log("\n");
+          console.log(`Success! ${newDepartment} Department Added`);
+          console.log("\n");
+          init();
+      });
+   });
+}
+
+const addARole = () => {
+  inquirer
+   .prompt([
+     {
+       type: "input",
+       message: "Please enter the new Role?",
+       name: "newRole"
+     },
+     {
+      type: "input",
+      message: "Please enter the Salaray for this role?",
+      name: "newSalary"
+    },
+    {
+      type: "input",
+      message: "What department fall under? Please enter Department ID:",
+      name: "department_id"
+    }
+   ])
+   .then((answers) => {
+      //QUERY TO RETURN ALL THE ROLES//
+      const sql = `INSERT INTO role (title, salary ) VALUES (?, ?, ?)`;
+      let roleArray = [answers.newRole, answers.newSalary, answers.department_id];
+
+      db.query(sql, roleArray, (err, rows) => {
+          console.log("\n");
+          console.log(`Success! ${newDepartment} Department Added`);
+          console.log("\n");
+          init();
+      });
+   });
+}
+
 const init = () => {
 inquirer
   .prompt([
     {
         type: 'list',
-        choices: ["view all departments", 'view all roles', 'view all employees', 'add a department','add a role', 'add an employee', 'update an employee role'],
+        choices: ["view all departments", 'view all roles', 'view all employees', 'add a department','add a role', 'add an employee', 'update an employee role', 'exit'],
         message: 'Please select an option below. You can use the Up & Down Keys to scroll',
         name: 'decision'
     }
@@ -91,15 +147,18 @@ inquirer
     } else if (answers.decision == "view all employees"){
         viewAllEmployees();
     }else if(answers.decision == "add a department"){
-
+        addADepartment();
     }else if(answers.decision == "add a role"){
-
+        addARole();
     } else if(answers.decision == "add an employee"){
         
     } else if(answers.decision == "update an employee role"){
 
+    } else if (answers.decision == "exit") {
+      console.log("Exiting the Program. Have a good day!")
+      return process.exit();
     } else {
-        console.log("Something went wrong");
+      console.log("Nada");
     }
   })
   .catch((error) => {
