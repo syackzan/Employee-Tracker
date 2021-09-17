@@ -21,3 +21,7 @@ JOIN departments ON role.departments_id = departments.id;
 -- QUERY FOR ADDING A DEPARTMENT --
 INSERT INTO departments (name)
 VALUES (?)
+
+-- QUERY FOR ADDING A ROLE --
+INSERT INTO role (title, salary, department_id) 
+VALUES (?, ?, ?)

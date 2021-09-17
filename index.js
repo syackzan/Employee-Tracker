@@ -112,17 +112,19 @@ const addARole = () => {
     {
       type: "input",
       message: "What department fall under? Please enter Department ID:",
-      name: "department_id"
+      name: "departments_id"
     }
    ])
    .then((answers) => {
       //QUERY TO RETURN ALL THE ROLES//
-      const sql = `INSERT INTO role (title, salary ) VALUES (?, ?, ?)`;
-      let roleArray = [answers.newRole, answers.newSalary, answers.department_id];
-
+      const sql = `INSERT INTO role (title, salary, departments_id) VALUES (?, ?, ?)`;
+      answers.newSalary = parseInt(answers.newSalary);
+      answers.departments_id = parseInt(answers.departments_id);
+      let roleArray = [answers.newRole, answers.newSalary, answers.departments_id];
+      console.log(roleArray);
       db.query(sql, roleArray, (err, rows) => {
           console.log("\n");
-          console.log(`Success! ${newDepartment} Department Added`);
+          console.log(`Success! ${answers.newRole} Role Added`);
           console.log("\n");
           init();
       });
