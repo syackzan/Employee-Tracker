@@ -1,0 +1,2 @@
+-- QUERY TO GET ALL DEPARTMENTS --
+SELECT * FROM departments;
