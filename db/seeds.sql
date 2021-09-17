@@ -5,10 +5,11 @@ VALUES ("Executive Department"),
        ("Sales Department"),
        ("Project Management Department");
 
-INSERT INTO role (title, salary, departments_id)
 VALUES ("CEO", 150000, 1),
+	   ("Executive Assistant", 60000, 1),
        ("CFO", 120000, 2),
        ("CTO", 130000, 3),
+       ("Account Analyst", 80000, 2),
        ("CSO", 130000, 4),
        ("Project Manager", 90000, 5),
        ("Project Engineer", 75000, 5);

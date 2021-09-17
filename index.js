@@ -26,7 +26,7 @@ const db = mysql.createConnection({
 
 
 const viewAllDepartments = () => {
-    //GET REQUEST to DB Query - use /api/viewdepartments//
+    //QUERY TO RETURN ALL THE DEPARTMENTS//
     const sql = 'SELECT * FROM departments';
 
     db.query(sql, (err, rows) => {
@@ -40,6 +40,24 @@ const viewAllDepartments = () => {
         init();
     });
     
+}
+
+const viewAllRoles = () => {
+    //QUERY TO RETURN ALL THE ROLES//
+    const sql = `SELECT role.id AS id, role.title AS Title, departments.department AS Department, role.salary AS salary 
+    FROM role 
+    JOIN departments ON role.departments_id = department.id`;
+
+    db.query(sql, (err, rows) => {
+        if (err){
+            res.status(500).json({ error: err.message});
+            return;
+        }
+        console.log("\n");
+        console.log("See Below for Departments");
+        console.table(rows);
+        init();
+    });
 }
 
 const init = () => {
@@ -56,7 +74,7 @@ inquirer
     if (answers.decision == "view all departments"){
         viewAllDepartments();
     } else if (answers.decision == "view all roles"){
-
+        viewAllRoles();
     } else if (answers.decision == "view all employees"){
 
     }else if(answers.decision == "add a department"){
