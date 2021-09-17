@@ -131,6 +131,47 @@ const addARole = () => {
    });
 }
 
+const addAEmployee = () => {
+  inquirer
+   .prompt([
+     {
+       type: "input",
+       message: "Please enter the employee's first name:",
+       name: "firstName"
+     },
+     {
+      type: "input",
+      message: "Please enter enter the employee's last name:",
+      name: "lastName"
+    },
+    {
+      type: "input",
+      message: "Please Enter the employee's Role:",
+      name: "eRole"
+    },
+    {
+      type: "input",
+      message: "Please Enter the employee's managers ID#:",
+      name: "eManager"
+    }
+   ])
+   .then((answers) => {
+      //QUERY TO RETURN ALL THE ROLES//
+      //Role_id needs a way to link to an actual role. Right now it is supposed to receive and integer!!!!
+      const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) 
+      VALUES (?, ?, ?, ?)`;
+      answers.eManager = parseInt(answers.eManager);
+      let roleArray = [answers.firstName, answers.lastName, answers.eRole, answers.eManager];
+      console.log(roleArray);
+      db.query(sql, roleArray, (err, rows) => {
+          console.log("\n");
+          console.log(`Success! ${answers.newRole} Employee Added`);
+          console.log("\n");
+          init();
+      });
+   });
+}
+
 const init = () => {
 inquirer
   .prompt([
@@ -153,7 +194,7 @@ inquirer
     }else if(answers.decision == "add a role"){
         addARole();
     } else if(answers.decision == "add an employee"){
-        
+       addAEmployee(); 
     } else if(answers.decision == "update an employee role"){
 
     } else if (answers.decision == "exit") {

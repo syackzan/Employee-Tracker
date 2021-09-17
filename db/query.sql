@@ -25,3 +25,7 @@ VALUES (?)
 -- QUERY FOR ADDING A ROLE --
 INSERT INTO role (title, salary, department_id) 
 VALUES (?, ?, ?)
+
+-- QUERY FOR ADDING AN EMPLOYEE --
+INSERT INTO employees (first_name, last_name, role, manager_id) 
+VALUES (?, ?, ?, ?)
