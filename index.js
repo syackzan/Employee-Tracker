@@ -197,10 +197,17 @@ const updateEmployee = () => {
        choices: namesArray,
        message: "Please select an Employee you would like to update.",
        name: "name"
+     },
+     {
+       type: "input",
+       message: "Please enter their new role by the Role ID #: ",
+       name: "promotion"
      }
    ])
    .then((answers) => {
       let setId;
+
+      answers.promotion = parseInt(answers.promotion);
     
     //SET ID # To Search//
       for (let i = 0; i < namesArray.length; i++){
@@ -209,20 +216,18 @@ const updateEmployee = () => {
         }
       }
 
-      const sql = ``;
-      console.log(setId);
-      console.log(answers.name);
+      let prompts = [answers.promotion, setId];
 
-      // console.log(roleArray);
-      // db.query(sql, roleArray, (err, rows) => {
-      //     console.log("\n");
-      //     console.log(`Success! ${answers.newRole} Employee Added`);
-      //     console.log("\n");
-      //     init();
-      // });
+      const sql = `UPDATE employee SET role_id = ? WHERE id = ?`;
+    
+      console.log(prompts);
+      db.query(sql, prompts, (err, rows) => {
+          console.log("\n");
+          console.log(`Success! ${answers.newRole} Employee Role Updated`);
+          console.log("\n");
+          init();
+      });
    });
-
-    //init();
 });
 }
 
