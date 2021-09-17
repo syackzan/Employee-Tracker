@@ -52,6 +52,27 @@ const viewAllRoles = () => {
     });
 }
 
+const viewAllEmployees = () => {
+  //QUERY TO RETURN ALL THE EMPLOYEES//
+  const sql = `SELECT employee.id AS ID, 
+  employee.first_name AS First_Name, 
+  employee.last_name AS Last_Name,
+  role.title AS Title,
+  departments.name AS Department,
+  role.salary AS Salary,
+  employee.manager_id AS Manager
+  FROM employee
+  JOIN role ON employee.role_id = role.id
+  JOIN departments ON role.departments_id = departments.id`;
+
+  db.query(sql, (err, rows) => {
+    console.log("\n");
+    console.log("Employee Database below");
+    console.table(rows);
+  });
+  init();
+}
+
 const init = () => {
 inquirer
   .prompt([
@@ -68,7 +89,7 @@ inquirer
     } else if (answers.decision == "view all roles"){
         viewAllRoles();
     } else if (answers.decision == "view all employees"){
-
+        viewAllEmployees();
     }else if(answers.decision == "add a department"){
 
     }else if(answers.decision == "add a role"){

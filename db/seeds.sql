@@ -5,6 +5,8 @@ VALUES ("Executive Department"),
        ("Sales Department"),
        ("Project Management Department");
 
+DROP TABLE IF EXISTS role;
+INSERT INTO role (title, salary, departments_id)
 VALUES ("Chief Executive Officer", 150000, 1),
 	("Executive Assistant", 60000, 1),
        ("Chief Financial Officer", 120000, 2),
@@ -16,15 +18,16 @@ VALUES ("Chief Executive Officer", 150000, 1),
        ("Project Manager", 90000, 5),
        ("Project Engineer", 75000, 5);
 
+DROP  TABLE IF EXISTS employee;
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Clark", "Kent", 1),
+VALUES ("Clark", "Kent", 1, NULL),
        ("Stacy", "Cruz", 2, 1),
-       ("Edwards", "Space", 3),
-       ("Steve", "Cullen", 4, 3)
-       ("Megan", "Bast", 5),
+       ("Edwards", "Space", 3, NULL),
+       ("Steve", "Cullen", 4, 3),
+       ("Megan", "Bast", 5, NULL),
        ("Eli", "Donalds", 6, 5),
-       ("Gregory", "Mitchell", 7),
+       ("Gregory", "Mitchell", 7, NULL),
        ("Stewart", "Stalwart", 8, 7),
-       ("John", "Stanza", 9),
+       ("John", "Stanza", 9, NULL),
        ("Carol", "Eslz", 10, 9);
 
