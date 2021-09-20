@@ -72,8 +72,9 @@ const viewAllEmployees = () => {
     console.log("\n");
     console.log("Employee Database below");
     console.table(rows);
+    init();
   });
-  init();
+  
 }
 
 //Add A Department//
@@ -126,7 +127,7 @@ const addARole = () => {
       answers.newSalary = parseInt(answers.newSalary);
       answers.departments_id = parseInt(answers.departments_id);
       let roleArray = [answers.newRole, answers.newSalary, answers.departments_id];
-      console.log(roleArray);
+      
       db.query(sql, roleArray, (err, rows) => {
           console.log("\n");
           console.log(`Success! ${answers.newRole} Role Added`);
@@ -152,7 +153,7 @@ const addAEmployee = () => {
     },
     {
       type: "input",
-      message: "Please Enter the employee's Role:",
+      message: "Please Enter the employee's Role by ID#:",
       name: "eRole"
     },
     {
@@ -168,10 +169,10 @@ const addAEmployee = () => {
       answers.eManager = parseInt(answers.eManager);
       answers.eRole = parseInt(answers.eRole);
       let roleArray = [answers.firstName, answers.lastName, answers.eRole, answers.eManager];
-      console.log(roleArray);
+      
       db.query(sql, roleArray, (err, rows) => {
           console.log("\n");
-          console.log(`Success! ${answers.newRole} Employee Added`);
+          console.log(`Success! ${`${answers.firstName} ${answers.lastName}`} Employee Added`);
           console.log("\n");
           init();
       });
@@ -221,7 +222,7 @@ const updateEmployee = () => {
 
       const sql = `UPDATE employee SET role_id = ? WHERE id = ?`;
     
-      console.log(prompts);
+      
       db.query(sql, prompts, (err, rows) => {
           console.log("\n");
           console.log(`Success! ${answers.newRole} Employee Role Updated`);
