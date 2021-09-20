@@ -116,7 +116,7 @@ const addARole = () => {
     },
     {
       type: "input",
-      message: "What department fall under? Please enter Department ID:",
+      message: "What department does this role fall under? Please enter Department ID:",
       name: "departments_id"
     }
    ])
